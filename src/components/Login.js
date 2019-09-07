@@ -1,28 +1,19 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { login, loginLoad } from '../redux/user/userActions'
+import { login } from '../redux/user/userActions'
 import { Redirect } from 'react-router-dom'
 
-const Login = ({ login, loginLoad, isLoggedIn, errorMessage }) => {
-  const [username, setUsername] = useState('')
+const Login = ({ login, isLoggedIn, errorMessage, loading }) => {
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
-  useEffect(() => {
-    loginLoad(JSON.parse(localStorage.getItem('isLoggedIn')))
-    // eslint-disable-next-line
-  }, [])
-
-  useEffect(() => {
-    localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn))
-  }, [isLoggedIn])
 
   const onSubmit = e => {
     e.preventDefault()
-    login({ username, password })
+    login({ email, password })
   }
 
   const onChange = ({ target: { name, value } }) => {
-    name === 'username' && setUsername(value)
+    name === 'email' && setEmail(value)
     name === 'password' && setPassword(value)
   }
 
@@ -30,7 +21,7 @@ const Login = ({ login, loginLoad, isLoggedIn, errorMessage }) => {
     <Redirect to='/profile' />
   ) : (
     <form onSubmit={onSubmit}>
-      <input type='text' name='username' value={username} onChange={onChange} />
+      <input type='email' name='email' value={email} onChange={onChange} />
       <input
         type='password'
         name='password'
@@ -38,21 +29,23 @@ const Login = ({ login, loginLoad, isLoggedIn, errorMessage }) => {
         onChange={onChange}
       />
 
-      <button type='submit'>Войти</button>
-
+      <button type='submit' disabled={loading}>
+        {loading ? 'Подождите' : 'Войти'}
+      </button>
+      {loading}
       {errorMessage}
     </form>
   )
 }
 
-const mapStateToProps = ({ user: { isLoggedIn, errorMessage } }) => ({
+const mapStateToProps = ({ user: { isLoggedIn, errorMessage, loading } }) => ({
   isLoggedIn,
   errorMessage,
+  loading,
 })
 
 const mapDispatchToProps = {
   login,
-  loginLoad,
 }
 
 export default connect(

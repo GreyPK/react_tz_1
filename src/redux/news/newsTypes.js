@@ -1,0 +1,3 @@
+export const FETCH_NEWS = 'FETCH_NEWS'
+export const FETCH_NEWS_FAILED = 'FETCH_NEWS_FAILED'
+export const SET_NEWS_LOADING = 'SET_NEWS_LOADING'
