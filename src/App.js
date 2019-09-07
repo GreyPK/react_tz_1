@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage/HomePage'
 import NewsPage from './pages/NewsPage/NewsPage'
 import ProfilePage from './pages/ProfilePage/ProfilePage'
 import LoginPage from './pages/LoginPage/LoginPage'
+import NotFound from './pages/NotFound/NotFound'
 import { connect } from 'react-redux'
 import { logout, loginLoad } from './redux/user/userActions'
 import './App.css'
@@ -48,6 +49,7 @@ const App = ({ isLoggedIn, logout, loginLoad }) => {
           <Route path='/news' component={NewsPage} />
           <PrivateRoute path='/profile' component={ProfilePage} />
           <Route path='/login' component={LoginPage} />
+          <Route component={NotFound} />
         </Switch>
       </div>
     </Router>
