@@ -21,12 +21,19 @@ const Login = ({ login, isLoggedIn, errorMessage, loading }) => {
     <Redirect to='/profile' />
   ) : (
     <form onSubmit={onSubmit}>
-      <input type='email' name='email' value={email} onChange={onChange} />
+      <input
+        type='email'
+        name='email'
+        value={email}
+        onChange={onChange}
+        required
+      />
       <input
         type='password'
         name='password'
         value={password}
         onChange={onChange}
+        required
       />
 
       <button type='submit' disabled={loading}>
