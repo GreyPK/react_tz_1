@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import PrivateRoute from './components/routing/PrivateRoute'
 import HomePage from './pages/HomePage/HomePage'
 import NewsPage from './pages/NewsPage/NewsPage'
@@ -9,6 +9,7 @@ import NotFound from './pages/NotFound/NotFound'
 import { connect } from 'react-redux'
 import { logout, loginLoad } from './redux/user/userActions'
 import './App.css'
+import Navigation from './components/Navigation'
 
 const App = ({ isLoggedIn, logout, loginLoad }) => {
   useEffect(() => {
@@ -19,31 +20,7 @@ const App = ({ isLoggedIn, logout, loginLoad }) => {
   return (
     <Router>
       <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to='/'>Home</Link>
-            </li>
-            <li>
-              <Link to='/news'>News</Link>
-            </li>
-            <li>
-              <Link to='/profile'>Profile</Link>
-            </li>
-            {!isLoggedIn ? (
-              <li>
-                <Link to='/login'>Login</Link>
-              </li>
-            ) : (
-              <li>
-                <button type='button' onClick={logout}>
-                  Logout
-                </button>
-              </li>
-            )}
-          </ul>
-        </nav>
-
+        <Navigation isLoggedIn={isLoggedIn} logout={logout} />
         <Switch>
           <Route path='/' exact component={HomePage} />
           <Route path='/news' component={NewsPage} />
