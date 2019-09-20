@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { login } from '../redux/user/userActions'
 import { Redirect } from 'react-router-dom'
+import { Form, Icon, Input, Button } from 'antd'
 
 const Login = ({ login, isLoggedIn, errorMessage, loading }) => {
   const [email, setEmail] = useState('')
@@ -20,28 +21,40 @@ const Login = ({ login, isLoggedIn, errorMessage, loading }) => {
   return isLoggedIn ? (
     <Redirect to='/profile' />
   ) : (
-    <form onSubmit={onSubmit}>
-      <input
-        type='email'
-        name='email'
-        value={email}
-        onChange={onChange}
-        required
-      />
-      <input
-        type='password'
-        name='password'
-        value={password}
-        onChange={onChange}
-        required
-      />
-
-      <button type='submit' disabled={loading}>
-        {loading ? 'Подождите' : 'Войти'}
-      </button>
-      {loading}
+    <Form
+      layout='inline'
+      onSubmit={onSubmit}
+      style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}
+    >
+      <Form.Item>
+        <Input
+          prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />}
+          placeholder='Email'
+          type='email'
+          name='email'
+          value={email}
+          onChange={onChange}
+          required
+        />
+      </Form.Item>
+      <Form.Item>
+        <Input
+          prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />}
+          type='password'
+          placeholder='Password'
+          name='password'
+          value={password}
+          onChange={onChange}
+          required
+        />
+      </Form.Item>
+      <Form.Item>
+        <Button type='primary' htmlType='submit' disabled={loading}>
+          {loading ? 'Подождите' : 'Войти'}
+        </Button>
+      </Form.Item>
       {errorMessage}
-    </form>
+    </Form>
   )
 }
 
