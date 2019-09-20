@@ -10,6 +10,7 @@ import { connect } from 'react-redux'
 import { logout, loginLoad } from './redux/user/userActions'
 import './App.css'
 import Navigation from './components/Navigation'
+import 'antd/dist/antd.css'
 
 const App = ({ isLoggedIn, logout, loginLoad }) => {
   useEffect(() => {
@@ -19,8 +20,8 @@ const App = ({ isLoggedIn, logout, loginLoad }) => {
 
   return (
     <Router>
-      <div>
-        <Navigation isLoggedIn={isLoggedIn} logout={logout} />
+      <Navigation isLoggedIn={isLoggedIn} logout={logout} />
+      <div style={{ padding: '10px' }}>
         <Switch>
           <Route path='/' exact component={HomePage} />
           <Route path='/news' component={NewsPage} />
