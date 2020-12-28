@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import PrivateRoute from './components/routing/PrivateRoute'
 import HomePage from './pages/HomePage/HomePage'
@@ -6,21 +6,14 @@ import NewsPage from './pages/NewsPage/NewsPage'
 import ProfilePage from './pages/ProfilePage/ProfilePage'
 import LoginPage from './pages/LoginPage/LoginPage'
 import NotFound from './pages/NotFound/NotFound'
-import { connect } from 'react-redux'
-import { logout, loginLoad } from './redux/user/userActions'
 import './App.css'
 import Navigation from './components/Navigation'
 import 'antd/dist/antd.css'
 
-const App = ({ isLoggedIn, logout, loginLoad }) => {
-  useEffect(() => {
-    loginLoad()
-    // eslint-disable-next-line
-  }, [])
-
+const App = () => {
   return (
     <Router>
-      <Navigation isLoggedIn={isLoggedIn} logout={logout} />
+      <Navigation />
       <div style={{ padding: '10px' }}>
         <Switch>
           <Route path='/' exact component={HomePage} />
@@ -34,13 +27,4 @@ const App = ({ isLoggedIn, logout, loginLoad }) => {
   )
 }
 
-const mapStateToProps = ({ user: { isLoggedIn } }) => ({
-  isLoggedIn,
-})
-
-const mapDispatchToProps = { logout, loginLoad }
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App)
+export default App

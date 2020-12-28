@@ -1,16 +1,21 @@
 import React, { useState } from 'react'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../redux/user/userActions'
 import { Redirect } from 'react-router-dom'
 import { Form, Icon, Input, Button } from 'antd'
 
-const Login = ({ login, isLoggedIn, errorMessage, loading }) => {
+const Login = () => {
+  const { isLoggedIn, errorMessage, loading } = useSelector(
+    (state) => state.user
+  )
+  const dispatch = useDispatch()
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault()
-    login({ email, password })
+    dispatch(login({ email, password }))
   }
 
   const onChange = ({ target: { name, value } }) => {
@@ -58,17 +63,4 @@ const Login = ({ login, isLoggedIn, errorMessage, loading }) => {
   )
 }
 
-const mapStateToProps = ({ user: { isLoggedIn, errorMessage, loading } }) => ({
-  isLoggedIn,
-  errorMessage,
-  loading,
-})
-
-const mapDispatchToProps = {
-  login,
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Login)
+export default Login

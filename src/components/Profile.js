@@ -1,17 +1,15 @@
 import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { fetchUserProfile } from '../redux/user/userActions'
 
-const Profile = ({
-  fetchUserProfile,
-  userId,
-  userProfile,
-  loading,
-  errorMessage,
-}) => {
+const Profile = () => {
+  const { userId, userProfile, loading, errorMessage } = useSelector(
+    (state) => state.user
+  )
+  const dispatch = useDispatch()
+
   useEffect(() => {
-    fetchUserProfile(userId)
-    //eslint-disable-next-line
+    dispatch(fetchUserProfile(userId))
   }, [])
 
   return loading ? (
@@ -24,7 +22,7 @@ const Profile = ({
         <h3>Город: {userProfile.city}</h3>
         <h4>Знание языков:</h4>
         <ul>
-          {userProfile.languages.map(language => (
+          {userProfile.languages.map((language) => (
             <li key={language}>
               <span>{language}</span>
             </li>
@@ -32,7 +30,7 @@ const Profile = ({
         </ul>
         <h4>Ссылки:</h4>
         <ul>
-          {userProfile.social.map(item => (
+          {userProfile.social.map((item) => (
             <li key={item.label}>
               <a href={item.link} rel='noopener noreferrer' target='_blank'>
                 {item.label}
@@ -45,18 +43,4 @@ const Profile = ({
   )
 }
 
-const mapStateToProps = state => ({
-  userProfile: state.user.userProfile,
-  errorMessage: state.user.errorMessage,
-  userId: state.user.userId,
-  loading: state.user.loading,
-})
-
-const mapDispatchToProps = {
-  fetchUserProfile,
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Profile)
+export default Profile

@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { NavLink, withRouter } from 'react-router-dom'
 import { Menu, Button } from 'antd'
+import { useDispatch, useSelector } from 'react-redux'
+import { loginLoad, logout } from '../redux/user/userActions'
 
-const Navigation = ({ isLoggedIn, logout, location }) => {
+const Navigation = ({ location }) => {
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn)
+  const dispatch = useDispatch()
   const [current, setCurrent] = useState('/home')
 
   useEffect(() => {
+    dispatch(loginLoad())
     setCurrent(location.pathname)
-    //eslint-disable-next-line
   }, [])
 
-  const handleClick = e => setCurrent(e.key)
+  const handleClick = (e) => setCurrent(e.key)
 
   return (
     <Menu onClick={handleClick} selectedKeys={[current]} mode='horizontal'>
@@ -29,7 +33,7 @@ const Navigation = ({ isLoggedIn, logout, location }) => {
         </Menu.Item>
       ) : (
         <Menu.Item>
-          <Button type='link' onClick={logout}>
+          <Button type='link' onClick={() => dispatch(logout())}>
             Logout
           </Button>
         </Menu.Item>

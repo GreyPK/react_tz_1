@@ -9,7 +9,7 @@ import {
 } from './userTypes'
 import axios from 'axios'
 
-export const login = user => async dispatch => {
+export const login = (user) => async (dispatch) => {
   try {
     dispatch(setLoading())
     const response = await axios.post('/validate', user)
@@ -31,11 +31,11 @@ export const login = user => async dispatch => {
   }
 }
 
-export const fetchUserProfile = userId => async dispatch => {
+export const fetchUserProfile = (userId) => async (dispatch) => {
   try {
     dispatch(setLoading())
     const response = await axios.get(`/user-info/${userId}`)
-    const sortedSocial = response.data.data.social.sort(a =>
+    const sortedSocial = response.data.data.social.sort((a) =>
       a.label === 'web' ? -1 : 1
     )
 

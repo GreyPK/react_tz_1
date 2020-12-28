@@ -1,11 +1,13 @@
 import React, { Fragment, useEffect } from 'react'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { fetchNews } from '../redux/news/newsActions'
 
-const News = ({ news, fetchNews, newsLoading, errorMessage }) => {
+const News = () => {
+  const { news, newsLoading, errorMessage } = useSelector((state) => state.news)
+  const dispatch = useDispatch()
+
   useEffect(() => {
-    fetchNews()
-    //eslint-disable-next-line
+    dispatch(fetchNews())
   }, [])
 
   return newsLoading ? (
@@ -16,7 +18,7 @@ const News = ({ news, fetchNews, newsLoading, errorMessage }) => {
     news && (
       <Fragment>
         <div>
-          {news.map(item => (
+          {news.map((item) => (
             <div key={item.id}>
               <h3>{item.title}</h3>
               <p>{item.text}</p>
@@ -29,17 +31,4 @@ const News = ({ news, fetchNews, newsLoading, errorMessage }) => {
   )
 }
 
-const mapStateToProps = ({ news: { news, errorMessage, newsLoading } }) => ({
-  news,
-  errorMessage,
-  newsLoading,
-})
-
-const mapDispatchToProps = {
-  fetchNews,
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(News)
+export default News
