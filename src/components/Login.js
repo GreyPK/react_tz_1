@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../redux/user/userActions'
 import { Redirect } from 'react-router-dom'
-import { Form, Icon, Input, Button } from 'antd'
+import { Form, Input, Button } from 'antd'
+import { UserOutlined, LockOutlined } from '@ant-design/icons'
 
 const Login = () => {
   const { isLoggedIn, errorMessage, loading } = useSelector(
@@ -13,8 +14,7 @@ const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const onSubmit = (e) => {
-    e.preventDefault()
+  const onFinish = (e) => {
     dispatch(login({ email, password }))
   }
 
@@ -28,12 +28,12 @@ const Login = () => {
   ) : (
     <Form
       layout='inline'
-      onSubmit={onSubmit}
+      onFinish={onFinish}
       style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}
     >
       <Form.Item>
         <Input
-          prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />}
+          prefix={<UserOutlined className='site-form-item-icon' />}
           placeholder='Email'
           type='email'
           name='email'
@@ -44,7 +44,7 @@ const Login = () => {
       </Form.Item>
       <Form.Item>
         <Input
-          prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />}
+          prefix={<LockOutlined className='site-form-item-icon' />}
           type='password'
           placeholder='Password'
           name='password'

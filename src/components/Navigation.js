@@ -12,6 +12,7 @@ const Navigation = ({ location }) => {
   useEffect(() => {
     dispatch(loginLoad())
     setCurrent(location.pathname)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleClick = (e) => setCurrent(e.key)
